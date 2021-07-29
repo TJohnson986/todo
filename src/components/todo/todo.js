@@ -62,6 +62,11 @@ const ToDo = () => {
     setEndIndex(endIndex + settings.itemNumber);
   }
 
+  function previous() {
+    setStartIndex(startIndex - settings.itemNumber);
+    setEndIndex(endIndex - settings.itemNumber);
+  }
+
   
   return (
     <>
@@ -104,6 +109,7 @@ const ToDo = () => {
         </div>
       ))}
 
+      <Button onClick={previous}>Previous</Button>
       <Button onClick={next}>Next</Button>
     </>
   );
