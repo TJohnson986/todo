@@ -6,12 +6,15 @@ import { v4 as uuid } from 'uuid';
 import { SettingsContext } from '../../context/Settings.js';
 
 const ToDo = () => {
+  
+  const settings = useContext(SettingsContext);
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(settings.itemNumber);
   const { handleChange, handleSubmit } = useForm(addItem);
 
-  const settings = useContext(SettingsContext);
 
   function addItem(item) {
     console.log(item);
@@ -45,7 +48,21 @@ const ToDo = () => {
   }, [list]);
 
 
-  console.log(settings);
+  function pagination() {
+
+    //settings.itemNumber is the size of the slice
+    let result = list.slice(startIndex, endIndex);
+
+    return result;
+  }
+
+
+  function next() {
+    setStartIndex(startIndex + settings.itemNumber);
+    setEndIndex(endIndex + settings.itemNumber);
+  }
+
+  
   return (
     <>
       <header>
@@ -76,7 +93,8 @@ const ToDo = () => {
         </label>
       </form>
 
-      {list.map(item => (
+
+      {pagination().map(item => (
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
@@ -86,6 +104,7 @@ const ToDo = () => {
         </div>
       ))}
 
+      <Button onClick={next}>Next</Button>
     </>
   );
 };
