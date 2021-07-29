@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useForm from '../../hooks/form.js';
 import { Button } from '@blueprintjs/core';
 
 import { v4 as uuid } from 'uuid';
+import { SettingsContext } from '../../context/Settings.js';
 
 const ToDo = () => {
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
+
+  const settings = useContext(SettingsContext);
 
   function addItem(item) {
     console.log(item);
@@ -41,6 +44,8 @@ const ToDo = () => {
     document.title = `To Do List: ${incomplete}`;
   }, [list]);
 
+
+  console.log(settings);
   return (
     <>
       <header>
