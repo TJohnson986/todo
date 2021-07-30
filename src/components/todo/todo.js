@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useForm from '../../hooks/form.js';
 import useStickyState from '../../hooks/storage.js';
-import { Button } from '@blueprintjs/core';
+import { Button, Switch } from '@blueprintjs/core';
 
 import { v4 as uuid } from 'uuid';
 import { SettingsContext } from '../../context/Settings.js';
@@ -98,7 +98,11 @@ const ToDo = () => {
         </label>
 
         <label>
-          <button type="submit">Add Item</button>
+          <Button type="submit">Add Item</Button>
+        </label>
+
+        <label>
+          <Switch>Show Completed Tasks</Switch>
         </label>
       </form>
 
@@ -108,7 +112,7 @@ const ToDo = () => {
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
+          <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()} </Button>
           <hr />
         </div>
       ))}
