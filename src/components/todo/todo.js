@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useForm from '../../hooks/form.js';
+import { Button } from '@blueprintjs/core';
 
 import { v4 as uuid } from 'uuid';
+import { SettingsContext } from '../../context/Settings.js';
 
 const ToDo = () => {
+  
+  const settings = useContext(SettingsContext);
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(settings.itemNumber);
   const { handleChange, handleSubmit } = useForm(addItem);
+
 
   function addItem(item) {
     console.log(item);
@@ -40,6 +47,27 @@ const ToDo = () => {
     document.title = `To Do List: ${incomplete}`;
   }, [list]);
 
+
+  function pagination() {
+
+    //settings.itemNumber is the size of the slice
+    let result = list.slice(startIndex, endIndex);
+
+    return result;
+  }
+
+
+  function next() {
+    setStartIndex(startIndex + settings.itemNumber);
+    setEndIndex(endIndex + settings.itemNumber);
+  }
+
+  function previous() {
+    setStartIndex(startIndex - settings.itemNumber);
+    setEndIndex(endIndex - settings.itemNumber);
+  }
+
+  
   return (
     <>
       <header>
@@ -70,16 +98,19 @@ const ToDo = () => {
         </label>
       </form>
 
-      {list.map(item => (
+
+      {pagination().map(item => (
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
+          <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
           <hr />
         </div>
       ))}
 
+      <Button onClick={previous}>Previous</Button>
+      <Button onClick={next}>Next</Button>
     </>
   );
 };
