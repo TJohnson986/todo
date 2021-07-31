@@ -31,7 +31,7 @@ export default class AuthProvider extends React.Component {
     this.state = {
       login: this.login,
       logout: this.logout,
-      isAuthenticated: this.isAuthenticated,
+      isAuthenticated: false,
       isAuthorized: this.isAuthorized,
       user: {capabilities: []},
     }
