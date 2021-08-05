@@ -17,12 +17,12 @@ function App () {
       <h1>Sorta Cool App</h1>
       <SettingsProvider>
         <LoginForm />
-        <Auth capability="read">
-          <p>"Can you read?</p>
-        </Auth>
-        <Auth capability="delete">
-          <p>Can you delete?</p>
-        </Auth>
+          <Auth capability="read">
+            <p>"Can you read?</p>
+          </Auth>
+          <Auth capability="delete">
+            <p>Can you delete?</p>
+          </Auth>
         <ToDo />
       </SettingsProvider>
     </div>

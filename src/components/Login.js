@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Button, InputGroup } from '@blueprintjs/core'
-import { AuthContext } from '../context/Auth';
+import { AuthContext }  from '../context/Auth.js';
 
 function Login() {
   const { isAuthenticated, login, logout } = useContext(AuthContext);
