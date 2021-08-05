@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useForm from '../../hooks/form.js';
-import { Button } from '@blueprintjs/core';
+import useStickyState from '../../hooks/storage.js';
+import { Button, Switch } from '@blueprintjs/core';
 
 import { v4 as uuid } from 'uuid';
 import { SettingsContext } from '../../context/Settings.js';
@@ -9,7 +10,7 @@ const ToDo = () => {
   
   const settings = useContext(SettingsContext);
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useStickyState([]);
   const [incomplete, setIncomplete] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(settings.itemNumber);
@@ -41,6 +42,10 @@ const ToDo = () => {
 
   }
 
+  function setStorage() {
+
+  }
+
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
@@ -67,7 +72,6 @@ const ToDo = () => {
     setEndIndex(endIndex - settings.itemNumber);
   }
 
-  
   return (
     <>
       <header>
@@ -94,7 +98,11 @@ const ToDo = () => {
         </label>
 
         <label>
-          <button type="submit">Add Item</button>
+          <Button type="submit">Add Item</Button>
+        </label>
+
+        <label>
+          <Switch>Show Completed Tasks</Switch>
         </label>
       </form>
 
@@ -104,7 +112,7 @@ const ToDo = () => {
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</Button>
+          <Button onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()} </Button>
           <hr />
         </div>
       ))}
@@ -114,5 +122,6 @@ const ToDo = () => {
     </>
   );
 };
+
 
 export default ToDo;
